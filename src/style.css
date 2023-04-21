@@ -1,0 +1,72 @@
+.goal_widget_preview {
+  height: 100px;
+}
+
+.eKxtVw {
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.crsJCR {
+  position: relative !important;
+  display: flex !important;
+  padding-left: 2rem !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.goal_widget {
+  background-color: #fff;
+}
+
+.goal_widget__image {
+  height: 70%;
+  max-width: 20%;
+}
+
+.goal_widget_preview .goal_widget__metadata {
+  font-size: 1.8rem;
+  justify-content: space-between;
+}
+
+.kDZnES {
+  display: flex !important;
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
+  width: 100% !important;
+}
+
+.beAYWq {
+  display: flex !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+}
+
+.goal_widget__contributions {
+  flex-shrink: 0;
+  /* white-space: pre-wrap; */
+}
+
+.eUxEWt {
+  display: inline-block !important;
+}
+
+.hlGewn {
+  transition: none 150ms ease 0ms;
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.ljqBaS {
+  position: absolute !important;
+  top: 0px !important;
+  bottom: 0px !important;
+}
+
+.feJdGm {
+  font-weight: 600;
+}
