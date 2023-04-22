@@ -73,7 +73,7 @@ export function Options({ options, updateOptions }: OptionsProps) {
     <Stack pt="lg">
       <SegmentedControl
         fullWidth
-        radius="lg"
+        radius="sm"
         data={[
           {
             value: 'border',

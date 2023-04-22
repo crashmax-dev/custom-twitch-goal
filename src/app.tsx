@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
-import { Button, Stack } from '@mantine/core'
+import { Button, Flex, Stack } from '@mantine/core'
 import { entries, useLocalStorage } from 'zero-dependency'
 import { CopyButton } from './components/copy-button'
 import { Options } from './components/options'
@@ -69,23 +69,32 @@ export function App() {
   }, [options])
 
   return (
-    <Stack p="lg">
+    <Stack
+      p="lg"
+      h="100vh"
+    >
       <Widget ref={widgetRef} />
-      <Options
-        options={options}
-        updateOptions={updateOptions}
-      />
-      <Button.Group>
-        <CopyButton options={options} />
-        <ShareButton
+      <Flex
+        h="inherit"
+        direction="column"
+        justify="space-between"
+      >
+        <Options
           options={options}
-          setQueryParams={setQueryParams}
+          updateOptions={updateOptions}
         />
-        <ResetButton
-          resetOptions={resetOptions}
-          setQueryParams={setQueryParams}
-        />
-      </Button.Group>
+        <Button.Group>
+          <CopyButton options={options} />
+          <ShareButton
+            options={options}
+            setQueryParams={setQueryParams}
+          />
+          <ResetButton
+            resetOptions={resetOptions}
+            setQueryParams={setQueryParams}
+          />
+        </Button.Group>
+      </Flex>
     </Stack>
   )
 }
