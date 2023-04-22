@@ -1,5 +1,6 @@
 import { Button, CopyButton as Clipboard } from '@mantine/core'
 import { IconCheck, IconCopy } from '@tabler/icons-react'
+import { transformOptionsToStyles } from '../utils'
 import type { WidgetOptions } from '../types'
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 
 export function CopyButton({ options }: Props) {
   return (
-    <Clipboard value={JSON.stringify(options, null, 2)}>
+    <Clipboard value={transformOptionsToStyles(options)}>
       {({ copied, copy }) => (
         <Button
           fullWidth

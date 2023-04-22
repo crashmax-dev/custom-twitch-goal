@@ -1,3 +1,7 @@
+import decamelize from 'decamelize'
+import { selectors } from './constants'
+import type { WidgetOptions } from './types'
+
 function parserFactory(type: string) {
   const regexp = new RegExp(`${type}`)
   return {
@@ -20,4 +24,24 @@ export function getBrightness(color: string) {
   const b = parseInt(color.substring(5, 7), 16)
   const brightness = (r * 299 + g * 587 + b * 114) / 1000
   return brightness
+}
+
+export function transformOptionsToStyles(styles: WidgetOptions) {
+  return Object.entries(styles)
+    .reduce<string[]>((classes, [selector, styles]) => {
+      const classStyles = Object.entries(styles).reduce<string[]>(
+        (styles, [property, value]) => {
+          styles.push(
+            `\n${decamelize(property, {
+              separator: '-'
+            })}: ${value} !important;`
+          )
+          return styles
+        },
+        []
+      )
+      classes.push(`${selectors[selector]} {${classStyles.join('')}}`)
+      return classes
+    }, [])
+    .join('\n ')
 }

@@ -1,12 +1,13 @@
 import { capitalize } from 'zero-dependency'
 import type { WidgetOptions } from './types'
 
-export const selectors = {
-  border: '.goal_widget',
+export const selectors: Record<string, string> = {
+  widget: '.goal_widget',
   progressBar: '.goal_widget__progress_bar',
   image: '.goal_widget__image.tw-image',
   leftText: '.goal_widget__metadata > div:first-child',
-  rightText: '.goal_widget__contributions'
+  rightText: '.goal_widget__contributions',
+  counterText: '.goal_widget__contributions > span'
 }
 
 export const borderStyles = [
