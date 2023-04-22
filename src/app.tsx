@@ -1,5 +1,5 @@
-import { useCallback, useLayoutEffect, useRef } from 'react'
-import { Button, Group, Stack } from '@mantine/core'
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
+import { Button, Stack } from '@mantine/core'
 import { entries, useLocalStorage } from 'zero-dependency'
 import { CopyButton } from './components/copy-button'
 import { Options } from './components/options'
@@ -7,6 +7,8 @@ import { ResetButton } from './components/reset-button'
 import { ShareButton } from './components/share-button'
 import { Widget } from './components/widget'
 import { defaultOptions } from './constants'
+import { useQueryParams } from './hooks/use-query-params'
+import { copyToClipboard } from './utils'
 import type { WidgetElements, WidgetOptions, WidgetSetValue } from './types'
 
 export function App() {
@@ -16,6 +18,26 @@ export function App() {
     setOptions,
     resetOptions
   ] = useLocalStorage<WidgetOptions>('options', defaultOptions)
+
+  const [queryParams, setQueryParams] = useQueryParams({
+    name: 'q',
+    deserialize: (value) => {
+      try {
+        return value ? JSON.parse(atob(value)) : ''
+      } catch (error) {
+        return ''
+      }
+    },
+    serialize: (value) => {
+      try {
+        const actualValue = value ? btoa(JSON.stringify(value)) : ''
+        copyToClipboard(`${location.origin}/?q=${actualValue}`)
+        return actualValue
+      } catch (error) {
+        return ''
+      }
+    }
+  })
 
   const updateOptions = useCallback<WidgetSetValue>((el, property, value) => {
     setOptions((prevValue) => ({
@@ -30,6 +52,12 @@ export function App() {
   const setStyle = useCallback<WidgetSetValue>((el, property, value) => {
     // @ts-ignore
     widgetRef.current[el].style[property] = value
+  }, [])
+
+  useEffect(() => {
+    if (queryParams) {
+      setOptions(queryParams)
+    }
   }, [])
 
   useLayoutEffect(() => {
@@ -49,8 +77,14 @@ export function App() {
       />
       <Button.Group>
         <CopyButton options={options} />
-        <ShareButton />
-        <ResetButton resetOptions={resetOptions} />
+        <ShareButton
+          options={options}
+          setQueryParams={setQueryParams}
+        />
+        <ResetButton
+          resetOptions={resetOptions}
+          setQueryParams={setQueryParams}
+        />
       </Button.Group>
     </Stack>
   )

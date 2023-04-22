@@ -1,4 +1,5 @@
 import decamelize from 'decamelize'
+import { el } from 'zero-dependency'
 import { selectors } from './constants'
 import type { WidgetOptions } from './types'
 
@@ -16,6 +17,10 @@ export const percentParser = parserFactory('%')
 export const imageParser = {
   parser: (value: string) => value.replaceAll(/url\(|\)/g, ''),
   formatter: (value: string) => `url(${value})`
+}
+
+export function isFunction(value: unknown): value is Function {
+  return typeof value === 'function'
 }
 
 export function getBrightness(color: string) {
@@ -44,4 +49,21 @@ export function transformOptionsToStyles(styles: WidgetOptions) {
       return classes
     }, [])
     .join('\n ')
+}
+
+export function copyToClipboard(text: string) {
+  const copyTextarea = el(
+    'textarea',
+    {
+      style: {
+        position: 'fixed',
+        opacity: '0'
+      }
+    },
+    text
+  )
+  document.body.appendChild(copyTextarea)
+  copyTextarea.select()
+  document.execCommand('copy')
+  document.body.removeChild(copyTextarea)
 }

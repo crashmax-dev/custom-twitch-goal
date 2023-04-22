@@ -4,13 +4,15 @@ import { IconTrash } from '@tabler/icons-react'
 
 interface Props {
   resetOptions: () => void
+  setQueryParams: (value: string) => void
 }
 
-export function ResetButton({ resetOptions }: Props) {
+export function ResetButton({ resetOptions, setQueryParams }: Props) {
   const onReset = useCallback(() => {
     const isConfirm = confirm('Are you sure you want to reset?')
     if (isConfirm) {
       resetOptions()
+      setQueryParams('')
     }
   }, [])
 
