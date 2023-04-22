@@ -1,4 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react'
+import { Box } from '@mantine/core'
 import { nbsp } from 'zero-dependency'
 import type { WidgetElements } from '../types'
 
@@ -28,7 +29,10 @@ export const Widget = forwardRef<WidgetElements>((props, ref) => {
   }))
 
   return (
-    <div className="Layout-sc-1xcs6mc-0 hRLJMK goal_widget_preview">
+    <Box
+      pt="sm"
+      className="Layout-sc-1xcs6mc-0 hRLJMK goal_widget_preview"
+    >
       <div
         ref={widgetRef}
         className="Layout-sc-1xcs6mc-0 eKxtVw goal_widget"
@@ -63,6 +67,6 @@ export const Widget = forwardRef<WidgetElements>((props, ref) => {
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   )
 })

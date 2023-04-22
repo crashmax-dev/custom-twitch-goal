@@ -31,7 +31,10 @@ export const defaultOptions: WidgetOptions = {
     borderWidth: '3px',
     borderStyle: 'solid',
     borderColor: '#000000',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    outlineWidth: '0px',
+    outlineStyle: 'solid',
+    outlineColor: '#0299FF'
   },
   progressBar: {
     backgroundColor: '#0299FF'
