@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useCallbackRef } from 'zero-dependency'
 import { isFunction } from '../utils'
+import { useCallbackRef } from './use-callback-ref'
 
 function getSearchParam(search: string, param: string) {
   const searchParams = new URLSearchParams(search)
@@ -22,7 +22,6 @@ interface SearchParamsOptions<T> {
   deserialize?: (value: string | null) => T
 }
 
-// ???
 export function useQueryParams<T>({
   name,
   serialize = defaultSerialize,
