@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { Button } from '@mantine/core'
+import { IconTrash } from '@tabler/icons-react'
 
 interface Props {
   resetOptions: () => void
@@ -15,8 +16,9 @@ export function ResetButton({ resetOptions }: Props) {
 
   return (
     <Button
-      color="red"
-      variant="outline"
+      fullWidth
+      leftIcon={<IconTrash size={16} />}
+      variant="default"
       onClick={onReset}
     >
       Reset

@@ -1,4 +1,5 @@
 import { Button, CopyButton as Clipboard } from '@mantine/core'
+import { IconCheck, IconCopy } from '@tabler/icons-react'
 import type { WidgetOptions } from '../types'
 
 interface Props {
@@ -10,11 +11,12 @@ export function CopyButton({ options }: Props) {
     <Clipboard value={JSON.stringify(options, null, 2)}>
       {({ copied, copy }) => (
         <Button
-          variant="outline"
-          color={copied ? 'teal' : 'blue'}
+          fullWidth
+          leftIcon={copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+          variant="default"
           onClick={copy}
         >
-          {copied ? 'Copied' : 'Copy custom styles'}
+          {copied ? 'Copied' : 'Copy'}
         </Button>
       )}
     </Clipboard>

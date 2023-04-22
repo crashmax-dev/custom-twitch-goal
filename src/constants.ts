@@ -1,3 +1,4 @@
+import { capitalize } from 'zero-dependency'
 import type { WidgetOptions } from './types'
 
 export const selectors = {
@@ -8,9 +9,7 @@ export const selectors = {
   rightText: '.goal_widget__contributions'
 }
 
-export const tabs = Object.keys(selectors)
-
-const borderStyles = [
+export const borderStyles = [
   'dashed',
   'dotted',
   'double',
@@ -21,76 +20,31 @@ const borderStyles = [
   'outset',
   'ridge',
   'solid'
-]
-
-export const replacers: Record<
-  string,
-  {
-    parser: (value: any) => string
-    formatter: (value: any) => string
-  }
-> = {
-  px: {
-    parser: (value) => value.replace(/px/g, ''),
-    formatter: (value) => `${value}px`
-  },
-  percentage: {
-    parser: (value) => value.replace(/%/g, ''),
-    formatter: (value) => `${value}%`
-  },
-  image: {
-    parser: (value) => value.replaceAll(/url\(|\)/g, ''),
-    formatter: (value) => `url(${value})`
-  }
-}
+].map((border) => ({
+  value: border,
+  label: capitalize(border)
+}))
 
 export const defaultOptions: WidgetOptions = {
-  border: {
-    borderRadius: {
-      type: 'NumberInput',
-      value: 1,
-      label: 'Radius',
-      replace: 'px'
-    },
-    borderWidth: {
-      type: 'NumberInput',
-      value: 3,
-      label: 'Width',
-      replace: 'px'
-    },
-    borderStyle: {
-      type: 'Select',
-      value: 'solid',
-      label: 'Style',
-      options: borderStyles
-    },
-    borderColor: {
-      type: 'ColorInput',
-      value: '#000000',
-      label: 'Color'
-    }
+  widget: {
+    borderRadius: '1rem',
+    borderWidth: '3px',
+    borderStyle: 'solid',
+    borderColor: '#000000',
+    backgroundColor: '#ffffff'
   },
   progressBar: {
-    width: {
-      type: 'NumberInput',
-      value: 50,
-      label: 'Width',
-      replace: 'percentage'
-    },
-    backgroundColor: {
-      type: 'ColorInput',
-      value: 'rgb(2, 153, 255)',
-      label: 'Color'
-    }
+    backgroundColor: '#0299FF'
   },
   image: {
-    content: {
-      type: 'NumberInput',
-      value: 'follow.svg',
-      label: 'Image URL',
-      replace: 'image'
-    }
+    content: 'follow.svg'
   },
-  leftText: {},
-  rightText: {}
+  leftText: {
+    color: '#0E0E10',
+    fontSize: '28px'
+  },
+  rightText: {
+    color: '#53535F',
+    fontSize: '28px'
+  }
 }

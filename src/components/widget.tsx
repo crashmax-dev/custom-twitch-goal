@@ -1,17 +1,17 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react'
 import { nbsp } from 'zero-dependency'
-import type { WidgetHandlers } from '../types'
+import type { WidgetElements } from '../types'
 
-export const Widget = forwardRef<WidgetHandlers>((props, ref) => {
-  const borderRef = useRef<HTMLDivElement>(null)
+export const Widget = forwardRef<WidgetElements>((props, ref) => {
+  const widgetRef = useRef<HTMLDivElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
   const leftTextRef = useRef<HTMLDivElement>(null)
   const rightTextRef = useRef<HTMLDivElement>(null)
 
   useImperativeHandle(ref, () => ({
-    get border() {
-      return borderRef.current!
+    get widget() {
+      return widgetRef.current!
     },
     get progressBar() {
       return progressBarRef.current!
@@ -30,12 +30,13 @@ export const Widget = forwardRef<WidgetHandlers>((props, ref) => {
   return (
     <div className="Layout-sc-1xcs6mc-0 hRLJMK goal_widget_preview">
       <div
-        ref={borderRef}
+        ref={widgetRef}
         className="Layout-sc-1xcs6mc-0 eKxtVw goal_widget"
       >
         <div
           ref={progressBarRef}
           className="Layout-sc-1xcs6mc-0 ljqBaS goal_widget__progress_bar"
+          style={{ width: '50%' }}
         ></div>
         <div className="Layout-sc-1xcs6mc-0 crsJCR goal_widget__body">
           <img
@@ -47,14 +48,12 @@ export const Widget = forwardRef<WidgetHandlers>((props, ref) => {
             <div
               ref={leftTextRef}
               className="Layout-sc-1xcs6mc-0 beAYWq"
-              style={{ color: 'rgb(14, 14, 16)' }}
             >
               Follower Goal
             </div>
             <div
               ref={rightTextRef}
               className="Layout-sc-1xcs6mc-0 bTJhJp goal_widget__contributions"
-              style={{ color: 'rgb(83, 83, 95)' }}
             >
               <span className="CoreText-sc-1txzju1-0 feJdGm InjectLayout-sc-1i43xsx-0 ScTransitionBase-sc-hx4quq-0 eUxEWt hlGewn tw-transition">
                 1500{nbsp().textContent}

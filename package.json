@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@mantine/core": "^6.0.8",
+    "@tabler/icons-react": "^2.17.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zero-dependency": "^0.2.1"
