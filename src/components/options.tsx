@@ -118,7 +118,7 @@ function BackgroundOptions({ options, updateOptions }: OptionsProps) {
         verticalSpacing="sm"
       >
         <ColorInput
-          label="Left"
+          label="Color"
           format="hex"
           value={options.progressBar.backgroundColor}
           onChange={(value) => {
@@ -126,7 +126,7 @@ function BackgroundOptions({ options, updateOptions }: OptionsProps) {
           }}
         />
         <ColorInput
-          label="Right"
+          label="Color"
           format="hex"
           value={options.widget.backgroundColor}
           onChange={(value) => {
