@@ -46,7 +46,8 @@ export const defaultOptions: WidgetOptions = {
     backgroundColor: '#0299FF'
   },
   image: {
-    content: 'follow.svg'
+    contentVisibility: 'visible',
+    content: `url(${location.href}follow.svg)`
   },
   leftText: {
     color: '#0E0E10',

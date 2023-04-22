@@ -13,6 +13,7 @@ export type WidgetOptions = {
     backgroundColor: string
   }
   image: {
+    contentVisibility: string
     content: string
   }
   leftText: {

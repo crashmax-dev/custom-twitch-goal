@@ -10,10 +10,12 @@ import {
   SegmentedControl,
   Select,
   SimpleGrid,
-  Stack
+  Stack,
+  TextInput
 } from '@mantine/core'
 import {
   IconBorderCorners,
+  IconPhotoEdit,
   IconTextSize,
   IconTexture
 } from '@tabler/icons-react'
@@ -56,7 +58,8 @@ const useStyles = createStyles<string, string>((theme, backgroundColor) => ({
 const tabs = {
   border: BorderOptions,
   background: BackgroundOptions,
-  text: TextOptions
+  text: TextOptions,
+  image: ImageOptions
 }
 
 type Tabs = keyof typeof tabs
@@ -96,6 +99,15 @@ export function Options({ options, updateOptions }: OptionsProps) {
               <Center>
                 <IconTextSize size={16} />
                 <Box ml={10}>Text</Box>
+              </Center>
+            )
+          },
+          {
+            value: 'image',
+            label: (
+              <Center>
+                <IconPhotoEdit size={16} />
+                <Box ml={10}>Image</Box>
               </Center>
             )
           }
@@ -342,6 +354,36 @@ function TextOptions({ options, updateOptions }: OptionsProps) {
             'counterText',
             'fontWeight',
             isChecked ? 'inherit' : 600
+          )
+        }}
+      />
+    </>
+  )
+}
+
+function ImageOptions({ options, updateOptions }: OptionsProps) {
+  const isVisibilityVisible = options.image.contentVisibility === 'visible'
+
+  return (
+    <>
+      <TextInput
+        label="URL"
+        value={options.image.content.replaceAll(/url\(|\)/g, '')}
+        onChange={(event) => {
+          updateOptions('image', 'content', `url(${event.currentTarget.value})`)
+        }}
+        disabled={!isVisibilityVisible}
+      />
+      <Checkbox
+        label="Visibility"
+        description="Show image on the left side"
+        checked={isVisibilityVisible}
+        onChange={(event) => {
+          const isChecked = event.currentTarget.checked
+          updateOptions(
+            'image',
+            'contentVisibility',
+            isChecked ? 'visible' : 'hidden'
           )
         }}
       />
