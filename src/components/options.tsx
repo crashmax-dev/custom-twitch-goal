@@ -18,7 +18,7 @@ import {
   IconTexture
 } from '@tabler/icons-react'
 import { borderStyles } from '../constants'
-import { pxParser, remParser } from '../utils'
+import { getBrightness, pxParser, remParser } from '../utils'
 import type { WidgetOptions, WidgetSetValue } from '../types'
 
 interface OptionsProps {
@@ -26,7 +26,7 @@ interface OptionsProps {
   updateOptions: WidgetSetValue
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles<string, string>((theme, backgroundColor) => ({
   root: {
     backgroundColor:
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
@@ -37,7 +37,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   indicator: {
-    background: theme.colors.blue
+    background: backgroundColor
   },
 
   control: {
@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
   label: {
     '&, &:hover': {
       '&[data-active]': {
-        color: theme.white
+        color: getBrightness(backgroundColor) > 128 ? theme.black : theme.white
       }
     }
   }
@@ -63,14 +63,14 @@ type Tabs = keyof typeof tabs
 
 export function Options({ options, updateOptions }: OptionsProps) {
   const [tab, setTab] = useState<Tabs>('border')
-  const { classes } = useStyles()
+  const { classes } = useStyles(options.progressBar.backgroundColor)
   const Component = tabs[tab]
 
   return (
     <Stack pt="lg">
       <SegmentedControl
         fullWidth
-        radius="xl"
+        radius="lg"
         data={[
           {
             value: 'border',
@@ -111,7 +111,6 @@ export function Options({ options, updateOptions }: OptionsProps) {
   )
 }
 
-// outline: khaki dashed 1px;
 // box-shadow: 0 0 0 1px skyblue;
 function BorderOptions({ options, updateOptions }: OptionsProps) {
   const isOutline = options.widget.outlineWidth !== '0px'
@@ -163,6 +162,7 @@ function BorderOptions({ options, updateOptions }: OptionsProps) {
       </SimpleGrid>
       <Checkbox
         label="Outline"
+        description="Use outline border"
         checked={isOutline}
         onChange={(event) => {
           const isChecked = event.currentTarget.checked
@@ -249,26 +249,6 @@ function TextOptions({ options, updateOptions }: OptionsProps) {
         spacing="sm"
         verticalSpacing="sm"
       >
-        <NumberInput
-          label="Size"
-          min={0}
-          step={1}
-          value={Number(pxParser.parser(options.leftText.fontSize))}
-          onChange={(value) => {
-            updateOptions('leftText', 'fontSize', `${value}px`)
-          }}
-          {...pxParser}
-        />
-        <NumberInput
-          label="Size"
-          min={0}
-          step={1}
-          value={Number(pxParser.parser(options.rightText.fontSize))}
-          onChange={(value) => {
-            updateOptions('rightText', 'fontSize', `${value}px`)
-          }}
-          {...pxParser}
-        />
         <ColorInput
           label="Color"
           format="hex"
@@ -285,7 +265,86 @@ function TextOptions({ options, updateOptions }: OptionsProps) {
             updateOptions('rightText', 'color', value)
           }}
         />
+        <NumberInput
+          label="Font size"
+          min={0}
+          step={1}
+          value={Number(pxParser.parser(options.leftText.fontSize))}
+          onChange={(value) => {
+            updateOptions('leftText', 'fontSize', `${value}px`)
+          }}
+          {...pxParser}
+        />
+        <NumberInput
+          label="Font size"
+          min={0}
+          step={1}
+          value={Number(pxParser.parser(options.rightText.fontSize))}
+          onChange={(value) => {
+            updateOptions('rightText', 'fontSize', `${value}px`)
+          }}
+          {...pxParser}
+        />
+        <NumberInput
+          label="Font weight"
+          min={100}
+          step={100}
+          max={900}
+          value={options.leftText.fontWeight}
+          onChange={(value) => {
+            updateOptions('leftText', 'fontWeight', value)
+          }}
+        />
+        <NumberInput
+          label="Font weight"
+          min={100}
+          step={100}
+          max={900}
+          value={options.rightText.fontWeight}
+          onChange={(value) => {
+            updateOptions('rightText', 'fontWeight', value)
+          }}
+        />
+        <Checkbox
+          label="Italic"
+          description="Applies on the left text"
+          checked={options.leftText.fontStyle === 'italic'}
+          onChange={(event) => {
+            const isChecked = event.currentTarget.checked
+            updateOptions(
+              'leftText',
+              'fontStyle',
+              isChecked ? 'italic' : 'normal'
+            )
+          }}
+        />
+        <Checkbox
+          label="Italic"
+          description="Applies on the right text"
+          checked={options.rightText.fontStyle === 'italic'}
+          onChange={(event) => {
+            const isChecked = event.currentTarget.checked
+            updateOptions(
+              'rightText',
+              'fontStyle',
+              isChecked ? 'italic' : 'normal'
+            )
+          }}
+        />
       </SimpleGrid>
+      <Checkbox
+        label="Inherit font weight"
+        description="Applies on the goal counter"
+        checked={options.counterText.fontWeight === 'inherit'}
+        onChange={(event) => {
+          const isChecked = event.currentTarget.checked
+          updateOptions(
+            'counterText',
+            'fontWeight',
+            isChecked ? 'inherit' : 600
+          )
+        }}
+      />
     </>
   )
 }

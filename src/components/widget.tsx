@@ -9,6 +9,7 @@ export const Widget = forwardRef<WidgetElements>((props, ref) => {
   const imageRef = useRef<HTMLImageElement>(null)
   const leftTextRef = useRef<HTMLDivElement>(null)
   const rightTextRef = useRef<HTMLDivElement>(null)
+  const counterTextRef = useRef<HTMLDivElement>(null)
 
   useImperativeHandle(ref, () => ({
     get widget() {
@@ -25,6 +26,9 @@ export const Widget = forwardRef<WidgetElements>((props, ref) => {
     },
     get rightText() {
       return rightTextRef.current!
+    },
+    get counterText() {
+      return counterTextRef.current!
     }
   }))
 
@@ -59,7 +63,10 @@ export const Widget = forwardRef<WidgetElements>((props, ref) => {
               ref={rightTextRef}
               className="Layout-sc-1xcs6mc-0 bTJhJp goal_widget__contributions"
             >
-              <span className="CoreText-sc-1txzju1-0 feJdGm InjectLayout-sc-1i43xsx-0 ScTransitionBase-sc-hx4quq-0 eUxEWt hlGewn tw-transition">
+              <span
+                ref={counterTextRef}
+                className="CoreText-sc-1txzju1-0 feJdGm InjectLayout-sc-1i43xsx-0 ScTransitionBase-sc-hx4quq-0 eUxEWt hlGewn tw-transition"
+              >
                 1500{nbsp().textContent}
               </span>
               / 3000 Followers

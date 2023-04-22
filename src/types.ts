@@ -18,10 +18,17 @@ export type WidgetOptions = {
   leftText: {
     color: string
     fontSize: string
+    fontWeight: number
+    fontStyle: string
   }
   rightText: {
     color: string
     fontSize: string
+    fontWeight: number
+    fontStyle: string
+  }
+  counterText: {
+    fontWeight: string | number
   }
 }
 
@@ -31,10 +38,11 @@ export interface WidgetElements {
   image: HTMLImageElement
   leftText: HTMLDivElement
   rightText: HTMLDivElement
+  counterText: HTMLDivElement
 }
 
 export type WidgetSetValue = <T extends keyof WidgetElements>(
   el: T,
   property: keyof WidgetOptions[T],
-  value: string
+  value: string | number | boolean
 ) => void

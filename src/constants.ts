@@ -25,6 +25,12 @@ export const borderStyles = [
   label: capitalize(border)
 }))
 
+export const fontStyles = [
+  'normal',
+  'italic',
+  'oblique'
+]
+
 export const defaultOptions: WidgetOptions = {
   widget: {
     borderRadius: '1rem',
@@ -44,10 +50,17 @@ export const defaultOptions: WidgetOptions = {
   },
   leftText: {
     color: '#0E0E10',
-    fontSize: '28px'
+    fontSize: '28px',
+    fontWeight: 400,
+    fontStyle: 'normal'
   },
   rightText: {
     color: '#53535F',
-    fontSize: '28px'
+    fontSize: '28px',
+    fontWeight: 400,
+    fontStyle: 'normal'
+  },
+  counterText: {
+    fontWeight: 600
   }
 }
