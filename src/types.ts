@@ -5,9 +5,6 @@ export type WidgetOptions = {
     borderWidth: string
     borderStyle: string
     borderColor: string
-    outlineWidth: string
-    outlineStyle: string
-    outlineColor: string
   }
   progressBar: {
     backgroundColor: string

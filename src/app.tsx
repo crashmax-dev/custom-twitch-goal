@@ -17,7 +17,7 @@ export function App() {
     options,
     setOptions,
     resetOptions
-  ] = useLocalStorage<WidgetOptions>('options_v2', defaultOptions)
+  ] = useLocalStorage<WidgetOptions>('options_v3', defaultOptions)
 
   const [queryParams, setQueryParams] = useQueryParams({
     name: 'q',
@@ -31,7 +31,9 @@ export function App() {
     serialize: (value) => {
       try {
         const actualValue = value ? btoa(JSON.stringify(value)) : ''
-        copyToClipboard(`${location.origin}/?q=${actualValue}`)
+        if (actualValue) {
+          copyToClipboard(`${location.origin}/?q=${actualValue}`)
+        }
         return actualValue
       } catch (error) {
         return ''

@@ -125,102 +125,50 @@ export function Options({ options, updateOptions }: OptionsProps) {
 
 // box-shadow: 0 0 0 1px skyblue;
 function BorderOptions({ options, updateOptions }: OptionsProps) {
-  const isOutline = options.widget.outlineWidth !== '0px'
-
   return (
-    <>
-      <SimpleGrid
-        cols={2}
-        spacing="sm"
-        verticalSpacing="sm"
-      >
-        <ColorInput
-          label="Color"
-          format="hex"
-          value={options.widget.borderColor}
-          onChange={(value) => {
-            updateOptions('widget', 'borderColor', value)
-          }}
-        />
-        <NumberInput
-          label="Width"
-          min={0}
-          step={1}
-          value={Number(pxParser.parser(options.widget.borderWidth))}
-          onChange={(value) => {
-            updateOptions('widget', 'borderWidth', `${value}px`)
-          }}
-          {...pxParser}
-        />
-        <NumberInput
-          label="Radius"
-          min={0}
-          step={1}
-          value={Number(remParser.parser(options.widget.borderRadius))}
-          onChange={(value) => {
-            updateOptions('widget', 'borderRadius', `${value}rem`)
-          }}
-          {...remParser}
-        />
-        <Select
-          label="Style"
-          value={options.widget.borderStyle}
-          data={borderStyles}
-          onChange={(value) => {
-            updateOptions('widget', 'borderStyle', value!)
-          }}
-          searchable
-        />
-      </SimpleGrid>
-      <Checkbox
-        label="Outline"
-        description="Use outline border"
-        checked={isOutline}
-        onChange={(event) => {
-          const isChecked = event.currentTarget.checked
-          updateOptions(
-            'widget',
-            'outlineWidth',
-            isChecked ? options.widget.borderWidth : '0px'
-          )
+    <SimpleGrid
+      cols={2}
+      spacing="sm"
+      verticalSpacing="sm"
+    >
+      <ColorInput
+        label="Color"
+        format="hex"
+        value={options.widget.borderColor}
+        onChange={(value) => {
+          updateOptions('widget', 'borderColor', value)
         }}
       />
-      {isOutline && (
-        <SimpleGrid
-          cols={3}
-          spacing="sm"
-          verticalSpacing="sm"
-        >
-          <ColorInput
-            label="Color"
-            format="hex"
-            value={options.widget.outlineColor}
-            onChange={(value) => {
-              updateOptions('widget', 'outlineColor', value)
-            }}
-          />
-          <NumberInput
-            label="Width"
-            min={0}
-            step={1}
-            value={Number(pxParser.parser(options.widget.outlineWidth))}
-            onChange={(value) => {
-              updateOptions('widget', 'outlineWidth', `${value}px`)
-            }}
-            {...pxParser}
-          />
-          <Select
-            label="Style"
-            value={options.widget.outlineStyle}
-            data={borderStyles}
-            onChange={(value) => {
-              updateOptions('widget', 'outlineStyle', value!)
-            }}
-            searchable
-          />
-        </SimpleGrid>
-      )}
-    </>
+      <NumberInput
+        label="Width"
+        min={0}
+        step={1}
+        value={Number(pxParser.parser(options.widget.borderWidth))}
+        onChange={(value) => {
+          updateOptions('widget', 'borderWidth', `${value}px`)
+        }}
+        {...pxParser}
+      />
+      <NumberInput
+        label="Radius"
+        min={0}
+        step={1}
+        value={Number(remParser.parser(options.widget.borderRadius))}
+        onChange={(value) => {
+          updateOptions('widget', 'borderRadius', `${value}rem`)
+        }}
+        {...remParser}
+      />
+      <Select
+        label="Style"
+        value={options.widget.borderStyle}
+        data={borderStyles}
+        onChange={(value) => {
+          updateOptions('widget', 'borderStyle', value!)
+        }}
+        searchable
+      />
+    </SimpleGrid>
   )
 }
 
