@@ -17,7 +17,7 @@ export function App() {
     options,
     setOptions,
     resetOptions
-  ] = useLocalStorage<WidgetOptions>('options_v3', defaultOptions)
+  ] = useLocalStorage<WidgetOptions>('options_v4', defaultOptions)
 
   const [queryParams, setQueryParams] = useQueryParams({
     name: 'q',
