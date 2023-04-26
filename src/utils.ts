@@ -1,6 +1,7 @@
 import decamelize from 'decamelize'
-import { el } from 'zero-dependency'
+import { el, entries } from 'zero-dependency'
 import { selectors } from './constants'
+import type { SelectedFonts } from './components/fonts'
 import type { WidgetOptions } from './types'
 
 function parserFactory(type: string) {
@@ -31,15 +32,20 @@ export function getBrightness(color: string) {
   return brightness
 }
 
-export function transformOptionsToStyles(styles: WidgetOptions) {
-  return Object.entries(styles)
+export function transformOptionsToStyles(
+  styles: WidgetOptions,
+  fonts: SelectedFonts
+) {
+  const widgetStyles = entries(styles)
     .reduce<string[]>((classes, [selector, styles]) => {
-      const classStyles = Object.entries(styles).reduce<string[]>(
+      const classStyles = entries(styles).reduce<string[]>(
         (styles, [property, value]) => {
           styles.push(
             `\n${decamelize(property, {
               separator: '-'
-            })}: ${value} !important;`
+            })}: ${
+              property === 'fontFamily' ? `"${value}", sans-serif` : value
+            } !important;`
           )
           return styles
         },
@@ -48,22 +54,22 @@ export function transformOptionsToStyles(styles: WidgetOptions) {
       classes.push(`${selectors[selector]} {${classStyles.join('')}}`)
       return classes
     }, [])
-    .join('\n ')
-}
+    .join('\n')
 
-export function copyToClipboard(text: string) {
-  const copyTextarea = el(
-    'textarea',
-    {
-      style: {
-        position: 'fixed',
-        opacity: '0'
-      }
-    },
-    text
-  )
-  document.body.appendChild(copyTextarea)
-  copyTextarea.select()
-  document.execCommand('copy')
-  document.body.removeChild(copyTextarea)
+  const fontFaces = entries(fonts)
+    .reduce<string[]>((fontFaces, [selector, font]) => {
+      fontFaces.push(`@font-face {
+      font-family: "${font!.id}";
+      font-style: normal;
+      font-weight: 400;
+      src: url(${font!.variants['400'].normal.latin.url.woff2}) format("woff2");
+      unicode-range: ${
+        font!.unicodeRange?.latin ?? font!.unicodeRange.cyrillic
+      };
+    }`)
+      return fontFaces
+    }, [])
+    .join('\n')
+
+  return `${fontFaces}\n${widgetStyles}`
 }

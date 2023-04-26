@@ -2,13 +2,13 @@ import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 import { Button, Flex, Stack } from '@mantine/core'
 import { entries, useLocalStorage } from 'zero-dependency'
 import { CopyButton } from './components/copy-button'
+import { FontProvider } from './components/fonts'
 import { Options } from './components/options'
 import { ResetButton } from './components/reset-button'
 import { ShareButton } from './components/share-button'
 import { Widget } from './components/widget'
 import { defaultOptions } from './constants'
 import { useQueryParams } from './hooks/use-query-params'
-import { copyToClipboard } from './utils'
 import type { WidgetElements, WidgetOptions, WidgetSetValue } from './types'
 
 export function App() {
@@ -32,7 +32,7 @@ export function App() {
       try {
         const actualValue = value ? btoa(JSON.stringify(value)) : ''
         if (actualValue) {
-          copyToClipboard(`${location.origin}/?q=${actualValue}`)
+          navigator.clipboard.writeText(`${location.origin}/?q=${actualValue}`)
         }
         return actualValue
       } catch (error) {
@@ -81,21 +81,26 @@ export function App() {
         direction="column"
         justify="space-between"
       >
-        <Options
-          options={options}
-          updateOptions={updateOptions}
-        />
-        <Button.Group>
-          <CopyButton options={options} />
-          <ShareButton
+        <FontProvider
+          leftText={options.leftText}
+          rightText={options.rightText}
+        >
+          <Options
             options={options}
-            setQueryParams={setQueryParams}
+            updateOptions={updateOptions}
           />
-          <ResetButton
-            resetOptions={resetOptions}
-            setQueryParams={setQueryParams}
-          />
-        </Button.Group>
+          <Button.Group>
+            <CopyButton options={options} />
+            <ShareButton
+              options={options}
+              setQueryParams={setQueryParams}
+            />
+            <ResetButton
+              resetOptions={resetOptions}
+              setQueryParams={setQueryParams}
+            />
+          </Button.Group>
+        </FontProvider>
       </Flex>
     </Stack>
   )

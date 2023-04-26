@@ -1,3 +1,12 @@
+// TLDR
+// В попытках описать все возможные опции виджета, я понял, что это не так просто
+// и нужно сделать это в виде отдельного компонента, который будет принимать
+// на вход опции и функцию для их обновления. Также нужно будет сделать
+// отдельный компонент для каждой группы опций, чтобы не было одного большого
+// компонента с кучей логики. В итоге я отказался от генерации компонента
+// с настроками из объекта и получилось 5 компонентов, которые отвечают
+// за опции виджета, прогресс бара, левого текста и правого текста.
+
 import { useState } from 'react'
 import {
   Box,
@@ -21,6 +30,7 @@ import {
 } from '@tabler/icons-react'
 import { borderStyles } from '../constants'
 import { getBrightness, pxParser, remParser } from '../utils'
+import { FontProvider, useFont } from './fonts'
 import type { WidgetOptions, WidgetSetValue } from '../types'
 
 interface OptionsProps {
@@ -202,6 +212,8 @@ function BackgroundOptions({ options, updateOptions }: OptionsProps) {
 }
 
 function TextOptions({ options, updateOptions }: OptionsProps) {
+  const { fonts, selectedFonts, changeFont } = useFont()
+
   return (
     <>
       <SimpleGrid
@@ -224,6 +236,30 @@ function TextOptions({ options, updateOptions }: OptionsProps) {
           onChange={(value) => {
             updateOptions('rightText', 'color', value)
           }}
+        />
+        <Select
+          label="Font family"
+          placeholder="Loading…"
+          disabled={!selectedFonts.leftText}
+          value={selectedFonts.leftText?.id}
+          data={fonts}
+          onChange={(value) => {
+            changeFont('leftText', value!)
+            updateOptions('leftText', 'fontFamily', value!)
+          }}
+          searchable
+        />
+        <Select
+          label="Font family"
+          placeholder="Loading…"
+          disabled={!selectedFonts.leftText}
+          value={selectedFonts.rightText?.id}
+          data={fonts}
+          onChange={(value) => {
+            changeFont('rightText', value!)
+            updateOptions('rightText', 'fontFamily', value!)
+          }}
+          searchable
         />
         <NumberInput
           label="Font size"

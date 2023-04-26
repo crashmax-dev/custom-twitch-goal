@@ -15,12 +15,14 @@ export type WidgetOptions = {
   }
   leftText: {
     color: string
+    fontFamily: string
     fontSize: string
     fontWeight: number
     fontStyle: string
   }
   rightText: {
     color: string
+    fontFamily: string
     fontSize: string
     fontWeight: number
     fontStyle: string
