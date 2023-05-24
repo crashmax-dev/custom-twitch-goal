@@ -185,12 +185,14 @@ export function FontProvider(props: FontProviderProps) {
     changeFont('leftText', props.leftText.fontFamily)
     changeFont('rightText', props.rightText.fontFamily)
 
-    return fonts.map((font) => {
-      return {
-        value: font.id,
-        label: font.family
-      }
-    })
+    return fonts
+      .filter((font) => font.id && font.family)
+      .map((font) => {
+        return {
+          value: font.id,
+          label: font.family
+        }
+      })
   }, [fonts])
 
   useEffect(() => {
